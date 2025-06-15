@@ -44,6 +44,25 @@ export const DomainUpdate = () => {
   const [scene, setScene] = useState(0);
 
   useEffect(() => {
+    // preload the image
+    const img = new Image();
+    img.src = "/lucid-bg.webp";
+    img.style.position = "absolute";
+    img.style.top = "-9999px";
+    img.style.left = "-9999px";
+    img.style.width = "1px";
+    img.style.height = "1px";
+    img.style.zIndex = "-1000";
+    img.style.opacity = "0";
+    img.style.pointerEvents = "none";
+    document.body.appendChild(img);
+
+    return () => {
+      document.body.removeChild(img);
+    };
+  }, []);
+
+  useEffect(() => {
     const timeout = setTimeout(() => {
       setStep(1);
     }, 6400);
