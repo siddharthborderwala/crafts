@@ -147,8 +147,8 @@ const SceneOne = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setStep(1);
-      // 2800 ms on step 0 + 500 ms wait
-    }, 3300);
+      // 2800 ms on step 0 + 1200 ms wait
+    }, 4000);
     return () => clearTimeout(timeout);
   }, []);
 
