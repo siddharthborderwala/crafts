@@ -48,7 +48,7 @@ const SceneZero = () => {
         opacity: 0,
         filter: "blur(2px)",
         transition: {
-          duration: 0.4,
+          duration: 0.8,
         },
       }}
       className="relative flex items-center pt-2.5 pb-2 px-5 h-[3rem] rounded-full border border-gray-200 bg-white w-[24rem]"
