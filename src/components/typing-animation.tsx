@@ -28,13 +28,13 @@ export function TypingAnimation({
 
   const [displayedText, setDisplayedText] = useState<string>("");
   const [isTyping, setIsTyping] = useState(false);
-  const [showInitialCursor, setShowInitialCursor] = useState(delay > 400);
+  const [showInitialCursor, setShowInitialCursor] = useState(delay >= 250);
 
   useEffect(() => {
-    if (delay > 400) {
+    if (delay >= 250) {
       const timeout = setTimeout(() => {
         setShowInitialCursor(false);
-      }, 400);
+      }, 250);
 
       return () => clearTimeout(timeout);
     }
@@ -86,7 +86,7 @@ export function TypingAnimation({
           className="absolute top-1/2 -translate-y-1/2 w-[2px] rounded-full h-[1.2em] bg-[hsl(272,66%,56%)] ml-[2px]"
           animate={isTyping ? undefined : { opacity: [1, 1, 0, 0] }}
           transition={{
-            duration: 1,
+            duration: 0.8,
             times: [0, 0.8, 0.8, 1],
             repeat: Infinity,
             ease: "anticipate",

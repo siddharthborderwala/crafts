@@ -2,42 +2,7 @@ import { useEffect, useState } from "react";
 import { TypingAnimation } from "../components/typing-animation";
 import { AnimatePresence, motion } from "motion/react";
 import { Spinner } from "../components/spinner";
-
-const ReducingText = ({ initialText }: { initialText: string }) => {
-  const [text, setText] = useState(initialText);
-  const [isTyping, setIsTyping] = useState(true);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setText((currentText) => {
-        const newText = currentText.substring(0, currentText.length - 1);
-        if (newText.length === 0) {
-          setIsTyping(false);
-          clearInterval(interval);
-        }
-        return newText;
-      });
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, [initialText]);
-
-  return (
-    <div className="relative text-2xl font-normal h-[2.1rem]">
-      {text}
-      <motion.span
-        className="absolute top-1/2 -translate-y-1/2 w-[2px] rounded-full h-[1.2em] bg-[hsl(272,66%,56%)] ml-[2px]"
-        animate={isTyping ? undefined : { opacity: [1, 1, 0, 0] }}
-        transition={{
-          duration: 1,
-          times: [0, 0.8, 0.8, 1],
-          repeat: Infinity,
-          ease: "anticipate",
-        }}
-      />
-    </div>
-  );
-};
+import { ReducingText } from "../components/reducing-text";
 
 export const DomainUpdate = () => {
   const [step, setStep] = useState(0);
@@ -65,35 +30,40 @@ export const DomainUpdate = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setStep(1);
-    }, 6400);
+      // 3500 ms on step 0 + 300 ms wait
+    }, 3800);
     return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setStep(2);
-    }, 8400);
+      // 1200 ms on step 1 + 300 ms wait
+    }, 5300);
     return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setStep(3);
-    }, 10100);
+      // 1500 ms on step 2 + 300 ms wait = 5300 + 1500 + 300 = 7100
+    }, 7100);
     return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setStep(4);
-    }, 10300);
+      // 300 ms on step 3 = 7100 + 300 = 7400
+    }, 7400);
     return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setScene(1);
-    }, 11000);
+      // 1000 ms on step 4 = 7400 + 1000 = 8400
+    }, 8400);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -116,7 +86,7 @@ export const DomainUpdate = () => {
               <TypingAnimation
                 key="typing-animation-0"
                 duration={125}
-                delay={2400}
+                delay={1200}
                 customDelays={[
                   { indexOfDelay: 2, duration: 300 },
                   { indexOfDelay: 7, duration: 300 },
@@ -135,7 +105,7 @@ export const DomainUpdate = () => {
                 key="typing-animation-1"
                 duration={125}
                 customDelays={[
-                  { indexOfDelay: 5, duration: 500 },
+                  { indexOfDelay: 5, duration: 300 },
                   { indexOfDelay: 6, duration: 200 },
                 ]}
                 className="text-2xl font-normal h-[2.1rem]"
@@ -200,7 +170,7 @@ export const DomainUpdate = () => {
         {scene === 1 ? (
           <motion.div
             key="scene-1"
-            className="h-[100vh] bg-[linear-gradient(to_right,rgb(255,255,255,0.25),rgb(255,255,255,0),rgb(255,255,255,0.25)),url(/lucid-bg.webp)] bg-cover bg-center w-[100vw] flex items-center justify-center"
+            className="h-[100vh] bg-[linear-gradient(to_right,rgb(255,255,255,0.25),rgb(255,255,255,0),rgb(255,255,255,0.25))] bg-cover bg-center w-[100vw] flex items-center justify-center"
             initial={{
               y: "100vh",
               filter: "blur(10px)",
@@ -215,6 +185,22 @@ export const DomainUpdate = () => {
               damping: 5,
             }}
           >
+            <motion.img
+              src="/lucid-bg.webp"
+              alt=""
+              className="absolute top-0 left-0 w-[100vw] h-[100vh] object-cover z-0"
+              initial={{
+                scale: 1,
+              }}
+              animate={{
+                scale: 1.1,
+              }}
+              transition={{
+                delay: 2.4,
+                duration: 6,
+                ease: "easeInOut",
+              }}
+            />
             <motion.h1
               initial={{
                 opacity: 0,
@@ -231,34 +217,34 @@ export const DomainUpdate = () => {
               className="text-center text-black font-instrument-serif max-w-[650px] px-4 text-[3.5rem] font-medium leading-[1.1] tracking-tight sm:px-6 sm:text-7xl md:px-0 lg:text-8xl"
             >
               <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 20, filter: "blur(2px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.4, delay: 1.2 }}
                 className="mr-6"
               >
                 Writing
               </motion.span>
               <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 1.4 }}
+                initial={{ opacity: 0, y: 20, filter: "blur(2px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.4, delay: 1.6 }}
                 className="italic"
               >
                 Reimagined
               </motion.span>
               <br />
               <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 1.6 }}
+                initial={{ opacity: 0, y: 20, filter: "blur(2px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.4, delay: 2.0 }}
                 className="mr-6"
               >
                 Through
               </motion.span>
               <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 1.8 }}
+                initial={{ opacity: 0, y: 20, filter: "blur(2px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.4, delay: 2.4 }}
               >
                 AI
               </motion.span>
