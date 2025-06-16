@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Spinner } from "../components/spinner";
 import { ReducingText } from "../components/reducing-text";
 import { initKeyboardSound, playEnterSound } from "../utils/sound";
+import { LucidLogo } from "../components/lucid-logo";
 
 const SceneZero = () => {
   const [step, setStep] = useState(0);
@@ -140,90 +141,127 @@ const SceneZero = () => {
   );
 };
 
-const SceneOne = () => (
-  <motion.div
-    key="scene-1"
-    className="h-[100vh] bg-[linear-gradient(to_right,rgb(255,255,255,0.25),rgb(255,255,255,0),rgb(255,255,255,0.25))] bg-cover bg-center w-[100vw] flex items-center justify-center"
-    initial={{
-      y: "100vh",
-      filter: "blur(10px)",
-    }}
-    animate={{
-      y: 0,
-      filter: "blur(0px)",
-    }}
-    transition={{
-      duration: 1.2,
-      stiffness: 20,
-      damping: 5,
-    }}
-  >
-    <motion.img
-      src="/lucid-bg.webp"
-      alt=""
-      className="absolute top-0 left-0 w-[100vw] h-[100vh] object-cover z-0"
+const SceneOne = () => {
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setStep(1);
+      // 2800 ms on step 0 + 500 ms wait
+    }, 3300);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return (
+    <motion.div
+      key="scene-1"
+      className="h-[100vh] w-[100vw] flex items-center justify-center"
       initial={{
-        scale: 1,
+        y: "100vh",
+        filter: "blur(10px)",
       }}
       animate={{
-        scale: 1.1,
-      }}
-      transition={{
-        delay: 2.4,
-        duration: 6,
-        ease: "easeInOut",
-      }}
-    />
-    <motion.h1
-      initial={{
-        opacity: 0,
-        filter: "blur(2px)",
-      }}
-      animate={{
-        opacity: 1,
+        y: 0,
         filter: "blur(0px)",
       }}
       transition={{
-        duration: 0.4,
-        delay: 1.2,
+        duration: 1.2,
+        stiffness: 20,
+        damping: 5,
       }}
-      className="text-center text-black font-instrument-serif max-w-[650px] px-4 text-[3.5rem] font-medium leading-[1.1] tracking-tight sm:px-6 sm:text-7xl md:px-0 lg:text-8xl"
     >
-      <motion.span
-        initial={{ opacity: 0, y: 20, filter: "blur(2px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.4, delay: 1.2 }}
-        className="mr-6"
-      >
-        Writing
-      </motion.span>
-      <motion.span
-        initial={{ opacity: 0, y: 20, filter: "blur(2px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.4, delay: 1.6 }}
-        className="italic"
-      >
-        Reimagined
-      </motion.span>
-      <br />
-      <motion.span
-        initial={{ opacity: 0, y: 20, filter: "blur(2px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.4, delay: 2.0 }}
-        className="mr-6"
-      >
-        Through
-      </motion.span>
-      <motion.span
-        initial={{ opacity: 0, y: 20, filter: "blur(2px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.4, delay: 2.6 }}
-      >
-        AI
-      </motion.span>
-    </motion.h1>
-  </motion.div>
-);
+      <motion.img
+        src="/lucid-bg.webp"
+        alt=""
+        className="absolute top-0 left-0 w-[100vw] h-[100vh] object-cover z-[-1]"
+        initial={{
+          scale: 1,
+        }}
+        animate={{
+          scale: 1.1,
+        }}
+        transition={{
+          delay: 2.4,
+          duration: 6,
+          ease: "easeInOut",
+        }}
+      />
+      <div className="absolute z-0 top-0 left-0 w-[100vw] h-[100vh] bg-[linear-gradient(to_right,rgb(255,255,255,0.1),rgb(255,255,255,0),rgb(255,255,255,0.1))] bg-cover bg-center" />
+      {step === 0 ? (
+        <motion.h1
+          key="lucid-moto"
+          initial={{
+            opacity: 0,
+            filter: "blur(2px)",
+          }}
+          animate={{
+            opacity: 1,
+            filter: "blur(0px)",
+          }}
+          transition={{
+            duration: 0.4,
+            delay: 1.2,
+          }}
+          className="text-center text-black font-instrument-serif max-w-[650px] px-4 text-[3.5rem] font-medium leading-[1.1] tracking-tight sm:px-6 sm:text-7xl md:px-0 lg:text-8xl"
+        >
+          <motion.span
+            initial={{ opacity: 0, y: 20, filter: "blur(2px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.4, delay: 1.2 }}
+            className="mr-6"
+          >
+            Writing
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0, y: 20, filter: "blur(2px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.4, delay: 1.6 }}
+            className="italic"
+          >
+            Reimagined
+          </motion.span>
+          <br />
+          <motion.span
+            initial={{ opacity: 0, y: 20, filter: "blur(2px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.4, delay: 2.0 }}
+            className="mr-6"
+          >
+            Through
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0, y: 20, filter: "blur(2px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.4, delay: 2.6 }}
+          >
+            AI
+          </motion.span>
+        </motion.h1>
+      ) : null}
+      {step === 1 ? (
+        <motion.div
+          key="lucid-logo"
+          initial={{
+            y: 20,
+            opacity: 0,
+            filter: "blur(2px)",
+          }}
+          animate={{
+            y: 0,
+            opacity: 1,
+            filter: "blur(0px)",
+          }}
+          transition={{
+            duration: 0.4,
+          }}
+          className="w-fit h-fit flex items-center justify-center"
+        >
+          <LucidLogo flowerSize={64} />
+        </motion.div>
+      ) : null}
+    </motion.div>
+  );
+};
 
 export const DomainUpdate = () => {
   const [scene, setScene] = useState(-1);
