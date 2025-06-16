@@ -3,6 +3,7 @@
 import { motion, type MotionProps } from "motion/react";
 import { useEffect, useState } from "react";
 import { cn } from "../utils";
+import { playCharSound } from "../utils/sound";
 
 interface TypingAnimationProps extends MotionProps {
   children: string;
@@ -50,7 +51,9 @@ export function TypingAnimation({
       }
 
       setIsTyping(true);
+      const nextChar = children[i];
       setDisplayedText(children.substring(0, i + 1));
+      playCharSound(nextChar);
 
       const nextCharDelay = customDelays.find((d) => d.indexOfDelay === i);
       if (nextCharDelay) {

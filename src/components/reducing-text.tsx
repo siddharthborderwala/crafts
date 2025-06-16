@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { playBackspaceDownSound, playBackspaceUpSound } from "../utils/sound";
 
 export const ReducingText = ({
   initialText,
@@ -12,12 +13,16 @@ export const ReducingText = ({
   const [isTyping, setIsTyping] = useState(true);
 
   useEffect(() => {
+    // Play backspace sound once at the beginning
+    playBackspaceDownSound();
+
     const interval = setInterval(() => {
       setText((currentText) => {
         const newText = currentText.substring(0, currentText.length - 1);
         if (newText.length === 0) {
           setIsTyping(false);
           clearInterval(interval);
+          playBackspaceUpSound();
         }
         return newText;
       });
