@@ -1,4 +1,5 @@
 import { Route, Switch } from "wouter";
+import { Analytics } from "@vercel/analytics/react";
 import { Intro } from "./pages/lucid-intro";
 import { DomainUpdate } from "./pages/lucid-domain-update";
 
@@ -37,6 +38,7 @@ export const App = () => {
       {routes.map((route) => (
         <Route key={route.path} path={route.path} component={route.component} />
       ))}
+      <Analytics />
     </Switch>
   );
 };
